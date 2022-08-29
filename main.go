@@ -16,7 +16,6 @@ import (
 //	pour être exportées dans le html....
 type dataIndexHTML struct {
 	Titre string
-	 
  }
  
  
@@ -35,13 +34,15 @@ type dataIndexHTML struct {
 func main() {
 	
   	r := mux.NewRouter()
- 
- 
-	  r.HandleFunc("/", HomeHandler).Methods(http.MethodGet).Methods(http.MethodGet)
-	  r.PathPrefix("/app/").Handler(http.StripPrefix("/app/", http.FileServer(http.Dir("./public"))))
+	// page racine
+	r.HandleFunc("/", HomeHandler).Methods(http.MethodGet).Methods(http.MethodGet)
 
-//   r.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css"))))
 
+	  r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("./public/css"))))
+	  r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir("./public/images"))))
+	  r.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("./public/js"))))
+
+ 
 
 srv := &http.Server{
 	Addr: "0.0.0.0:8000",
