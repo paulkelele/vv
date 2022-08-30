@@ -21,27 +21,29 @@ import (
 type dataIndexHTML struct {
 	Titre string
 }
+var titre string
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("public/html/index.html"))
 	w.Header().Set("Content-Type", "text/html")
+	titre = "Mon titre"
 	data := dataIndexHTML{
-		Titre: "Mon titre",
+		Titre: titre,
 	}
 	tmpl.Execute(w, data)
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("public/html/index.html"))
+	//  tmpl := template.Must(template.ParseFiles("public/html/index.html"))
 	w.Header().Set("Content-Type", "text/html")
-	nom := r.PostFormValue("nom") 
+	titre = r.PostFormValue("nom") 
 	
  	 
-	data := dataIndexHTML{
-		Titre: nom,
-	}
-	tmpl.Execute(w, data)
-	
+	// data := dataIndexHTML{
+	// 	Titre: nom,
+	// }
+	//  tmpl.Execute(w, data)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func main() {
